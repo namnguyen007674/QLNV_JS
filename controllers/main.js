@@ -8,7 +8,7 @@ let employees = [];
 
 init();
 function init() {
-  employees = JSON.parse(localStorage.getItem("employees")) || [];
+  employees = JSON.parse(localStorage.getItem("employees")) || [] ;
   employees = employees.map((value) => {
     return new Employee(
       value.username,
@@ -36,7 +36,7 @@ function addEmployee() {
   // Kiểm tra thông tin input và tạo đối tượng nhân viên
 
   let employee = validate();
-  if (!validate) {
+  if (!employee) {
     return;
   }
 
@@ -44,10 +44,11 @@ function addEmployee() {
   employees.push(employee);
   localStorage.setItem("employees", JSON.stringify(employees));
 
-  //Ẩn Modal
-  $("#myModal").modal("hide");
+  
   //Hiển thị danh sách nhân viên
   display(employees);
+  //Ẩn Modal
+  $("#myModal").modal("hide");
   //Reset Form
   resetForm();
   
@@ -110,7 +111,7 @@ function selectEmployee(employeeId) {
 function uppdateEmployee() {
   isSubmitted = true;
   let employee = validate();
-  if (!validate) {
+  if (!employee) {
     return;
   }
   //Tìm index của employee cần cập nhật
@@ -248,17 +249,7 @@ function validate() {
   let position = getElement("#chucvu").value;
   let time = getElement("#gioLam").value;
 
-  let employee = new Employee(
-    username,
-    name,
-    email,
-    password,
-    date,
-    +basicSalary,
-    position,
-    +time
-  );
-
+  
   let isValid = true;
 
   let spanUserName = document.getElementById("tbTKNV");
@@ -269,7 +260,7 @@ function validate() {
     spanUserName.innerHTML = `Tài khoản không được để trống`;
   } else if (!isUser(username)) {
     isValid = false;
-    spanUserName.innerHTML.innerHTML = ` Tài khoản tối đa 4 - 6 ký số`;
+    spanUserName.innerHTML = ` Tài khoản tối đa 4 - 6 ký số`;
   }
 
   let spanName = document.getElementById("tbTen");
@@ -341,7 +332,17 @@ function validate() {
   }
 
   if (isValid) {
-    return employee;
+    let employee = new Employee(
+      username,
+      name,
+      email,
+      password,
+      date,
+      +basicSalary,
+      position,
+      +time
+    );
+    return employee
   }
   return undefined;
 }

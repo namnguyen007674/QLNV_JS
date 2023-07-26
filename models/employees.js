@@ -8,7 +8,7 @@ function Employee(
   position,
   time
 ) {
-  this.username = username;
+  this.username = username; 
   this.name = name;
   this.email = email;
   this.password = password;
